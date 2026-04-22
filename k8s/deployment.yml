@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traceabilite-logistique
+spec:
+  replicas: 2 # On lance 2 exemplaires de l'app pour la haute disponibilité
+  selector:
+    matchLabels:
+      app: traceabilite
+  template:
+    metadata:
+      labels:
+        app: traceabilite
+    spec:
+      containers:
+      - name: app-logistique
+        image: monacr.azurecr.io/traceabilite:latest # À adapter avec votre ACR plus tard
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
