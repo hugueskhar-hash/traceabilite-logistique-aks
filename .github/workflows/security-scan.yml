@@ -1,0 +1,18 @@
+name: Scan de Sécurité DevSecOps
+on: [push] # Se déclenche à chaque fois que vous envoyez du code
+
+jobs:
+  security_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v3
+
+      - name: Scanner le Dockerfile avec Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'votre-projet-logistique:latest' # Nom temporaire
+          scan-type: 'config'
+          format: 'table'
+          exit-code: '1' # Bloque le pipeline si une faille est trouvée
+          severity: 'CRITICAL,HIGH'
